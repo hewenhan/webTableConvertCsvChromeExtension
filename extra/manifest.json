@@ -1,0 +1,15 @@
+{
+    "name": "Table Convert CSV",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "Get pages source from a popup",
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "<all_urls>",
+        "downloads"
+    ]
+}

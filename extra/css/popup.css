@@ -1,0 +1,11 @@
+html{
+    
+}
+body{
+    margin: 12px;
+    max-width: 750px;
+}
+.tableBtn{
+    width: 85px;
+    margin: 12px;
+}
