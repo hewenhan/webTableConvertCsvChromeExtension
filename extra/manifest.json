@@ -1,6 +1,6 @@
 {
     "name": "Table Convert CSV",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "manifest_version": 2,
     "description": "Get pages source from a popup",
     "browser_action": {

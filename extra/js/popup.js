@@ -1,5 +1,3 @@
-var csv = new csv();
-
 chrome.runtime.onMessage.addListener(function (request, sender) {
     var hiddenDom = document.getElementById('insertedTablesHidden');
     var showDom = document.getElementById('insertedTablesShow');
@@ -8,25 +6,29 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     }
     var tables = hiddenDom.getElementsByTagName('table');
     showDom.innerHTML = '';
+    var tableMap = [];
     for (var i = 0; i < tables.length; i++) {
-        var id = tables[i].id;
-        showDom.innerHTML += '<button class="tableBtn" tableId="' + id + '">下载表格 ' + (i + 1) + '</button>';
+        showDom.innerHTML += '<button class="tableBtn">下载表格 ' + (i + 1) + '</button>';
+        tableMap.push(tables[i]);
     }
     var btns = showDom.getElementsByTagName('button');
     for (var i = 0; i < btns.length; i++) {
-        var id = btns[i].attributes.tableid.textContent;
         var callback = function () {
-            var downloadCsv = function (tableId) {
-                var content = decodeURIComponent(csv.getCsvStrEncode(tableId));
-                var blob = new Blob([content]);
-                var url = URL.createObjectURL(blob);
-                chrome.downloads.download({
-                    url: url,
-                    filename: id + '.csv',
-                    saveAs: true
-                });
+            for (var j = 0; j < btns.length; j++) {
+                if (this === btns[j]) {
+                    var num = j
+                }
+            }
+            var elem = tableMap[num];
+            var content = decodeURIComponent(elem.getCsvStrEncode());
+            var blob = new Blob([content]);
+            var url = URL.createObjectURL(blob);
+            var arg = {
+                url: url,
+                filename: 'table_' + (num + 1) + '.csv',
+                saveAs: true
             };
-            downloadCsv(id);
+            chrome.downloads.download(arg);
         };
         btns[i].addEventListener("click", callback);
     }
